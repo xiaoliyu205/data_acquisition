@@ -20,8 +20,7 @@ public abstract class SendDpValue {
     private RedisCache redisCache;
 
     public void execute(DpValueItem dpValueItem) {
-        String dpValueItemStr = JSON.toJSONString(dpValueItem, SerializerFeature.WriteDateUseDateFormat);
-        redisCache.set(RedisKeyPrefix.DATA_POINT + dpValueItem.getDpName(), dpValueItemStr);
+        redisCache.set(RedisKeyPrefix.DATA_POINT + dpValueItem.getDpName(), JSON.toJSONString(dpValueItem, SerializerFeature.WriteDateUseDateFormat));
         send(dpValueItem);
     }
 
