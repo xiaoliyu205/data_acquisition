@@ -1,0 +1,11 @@
+bootJar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(':da-common')
+    implementation project(':da-drivers')
+
+}
+
+description = 'da-service'

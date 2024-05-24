@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: data_acquisition
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+
+sendItem:
+  model: rabbitmq    #rabbttmq: redis + rabbitmq    mqtt: redis + mqtt

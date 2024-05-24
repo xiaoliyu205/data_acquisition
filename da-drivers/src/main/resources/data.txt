@@ -1,0 +1,9 @@
+################################
+INSERT INTO `data_acquisition_dev`.`opcua_address`
+(`id`, `dpt`, `datapoint`, `plc_name`, `opcua_address`, `url`, `namespace`, `user_name`, `password`) VALUES
+(1, 'CarNum', 'VM1010', 'VM', '"Station_Data"."Station"[0]."PIN"', 'opc.tcp://22.67.50.10:4840', 3, '', ''),
+(2, 'CarNum', 'VM1020', 'VM', '"Station_Data"."Station"[1]."PIN"', 'opc.tcp://22.67.50.10:4840', 3, '', ''),
+(3, 'CarNum', 'VM1030', 'VM', '"Station_Data"."Station"[2]."PIN"', 'opc.tcp://22.67.50.10:4840', 3, '', ''),
+(4, 'CarNum', 'PA1020', 'PA', '"Station_Data"."Station"[1]."PIN"', 'opc.tcp://22.67.54.10:4840', 3, '', ''),
+(5, 'CarNum', 'PA1020', 'PA', '"Station_Data"."Station"[1]."PIN"', 'opc.tcp://22.67.54.10:4840', 3, '', ''),
+(6, 'CarNum', 'PA1020', 'PA', '"Station_Data"."Station"[1]."PIN"', 'opc.tcp://22.67.54.10:4840', 3, '', '');
