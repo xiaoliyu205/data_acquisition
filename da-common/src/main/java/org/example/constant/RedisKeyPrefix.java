@@ -11,9 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisKeyPrefix {
 
-    public static final String DATA_SOURCE = "DC:";
+    public static final String DATA_CONFIG = "DataConfig:";
 
-    public static final String DATA_POINT = DATA_SOURCE + "DataPoint:";
+    public static final String ADDRESS_CONFIG = DATA_CONFIG + "Address:";
 
-    public static final String ADDRESS_CONFIG = DATA_SOURCE + "Address:";
+    public static final String NODE_CONFIG = DATA_CONFIG + "NodeId:";
+
+    public static final String DATA_POINT = "DataPoint:";
+
+    public static final String DELETE_STR = "Data";
 }

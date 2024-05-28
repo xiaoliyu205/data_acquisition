@@ -4,6 +4,7 @@ import org.example.annotation.SendItemType;
 import org.example.constant.DpConstant;
 import org.example.datapoint.DpValueItem;
 import org.example.datapoint.SendDpValue;
+import org.example.rabbitmq.RabbitConfig;
 import org.example.rabbitmq.RabbitmqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,6 @@ public class ModelRabbitMq extends SendDpValue {
 
     @Override
     public void send(DpValueItem dpValueItem) {
-        rabbitmqService.sendMessage(DpConstant.EXCHANGE, DpConstant.DPT_PREDIX + (dpValueItem.getDpName().split(":"))[0], dpValueItem.getValue());
+        rabbitmqService.sendMessage(RabbitConfig.EXCHANGE_READ, (dpValueItem.getDpName().split(":"))[0], dpValueItem.getValue());
     }
 }

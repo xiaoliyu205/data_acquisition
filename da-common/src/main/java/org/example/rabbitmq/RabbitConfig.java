@@ -1,6 +1,5 @@
 package org.example.rabbitmq;
 
-import org.example.constant.DpConstant;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.FanoutExchange;
@@ -17,19 +16,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
+    public static final String EXCHANGE_READ = "DataPoint-Exchange-Read";
+    public static final String EXCHANGE_WRITE = "DataPoint-Exchange-Write";
+    public static final String QUEUE_READ = "DataPoint-Queue-Read";
+    public static final String QUEUE_WRITE = "DataPoint-Queue-Write";
+
     @Bean
-    public Queue subQueue() {
-        return new Queue(DpConstant.DPT_PREDIX + "*");
+    public Queue subQueueRead() {
+        return new Queue(QUEUE_READ, true);
     }
 
     @Bean
-    public FanoutExchange subExchange() {
-        return new FanoutExchange(DpConstant.EXCHANGE);
+    public Queue subQueueWrite() {
+        return new Queue(QUEUE_WRITE, true);
     }
 
     @Bean
-    public Binding Binding() {
-        return BindingBuilder.bind(subQueue()).to(subExchange());
+    public FanoutExchange subExchangeRead() {
+        return new FanoutExchange(EXCHANGE_READ);
     }
 
+    @Bean
+    public FanoutExchange subExchangeWrite() {
+        return new FanoutExchange(EXCHANGE_WRITE);
+    }
+
+    @Bean
+    public Binding BindingRead() {
+        return BindingBuilder.bind(subQueueRead()).to(subExchangeRead());
+    }
+
+    @Bean
+    public Binding BindingWrite() {
+        return BindingBuilder.bind(subQueueWrite()).to(subExchangeWrite());
+    }
 }

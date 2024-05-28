@@ -19,6 +19,7 @@ import org.example.constant.RedisKeyPrefix;
 import org.example.datapoint.DpValueItem;
 import org.example.datapoint.SendDpValue;
 import org.example.datapoint.SendItemFactory;
+import org.example.entity.OpcUaAddrInfo;
 import org.example.entity.OpcUaAddress;
 import org.example.mapper.OpcUaAddressMapper;
 import org.example.redis.RedisCache;
@@ -62,6 +63,8 @@ public class OpcUaDriver implements ApplicationRunner {
 
     private SendDpValue sendDpValue;
 
+    private static final Map<String, OpcUaClient> urlClient = new HashMap<>();
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
@@ -69,13 +72,13 @@ public class OpcUaDriver implements ApplicationRunner {
 
         List<OpcUaAddress> opcUaAddressList = opcUaAddressMapper.selectList(new LambdaQueryWrapper<>());
 
-        Set<String> keys = redisCache.keys(RedisKeyPrefix.DATA_SOURCE + "*");
+        Set<String> keys = redisCache.keys(RedisKeyPrefix.DELETE_STR + "*");
         redisCache.delete(keys);
 
         opcUaAddressList.forEach(e -> {
             //设置在缓存里
-            redisCache.set(RedisKeyPrefix.ADDRESS_CONFIG +e.getUrl() + ":" + e.getAddress(), e.getDataPointType() + ":" + e.getDataPoint());
-
+            redisCache.set(RedisKeyPrefix.ADDRESS_CONFIG + e.getUrl() + ":" + e.getAddress(), e.getDataPointType() + ":" + e.getDataPoint());
+            redisCache.set(RedisKeyPrefix.NODE_CONFIG + e.getDataPointType() + ":" + e.getDataPoint(), JSON.toJSONString(new OpcUaAddrInfo(e.getUrl(), e.getAddress(), e.getNamespaceIndex())));
             if (!urlMap.containsKey(e.getUrl())) {
                 urlMap.put(e.getUrl(), e);
                 urlNodeMap.put(e.getUrl(), new ArrayList<>());
@@ -87,7 +90,7 @@ public class OpcUaDriver implements ApplicationRunner {
         if (!urlMap.isEmpty()) {
             urlMap.forEach((url, opcUaAddress) -> {
                 new Thread(() -> {
-                    start(url, opcUaAddress.getUserName(), opcUaAddress.getPassword(), urlNodeMap.get(url));
+                    urlClient.put(url, start(url, opcUaAddress.getUserName(), opcUaAddress.getPassword(), urlNodeMap.get(url)));
                 }).start();
             });
         }
@@ -95,6 +98,10 @@ public class OpcUaDriver implements ApplicationRunner {
 
     private String getDpNameByUrlAndNode(String url, String nodeName) {
         return redisCache.get(RedisKeyPrefix.ADDRESS_CONFIG + url + ":" + nodeName);
+    }
+
+    public static OpcUaClient getOpcUaClient(String url) {
+        return urlClient.get(url);
     }
 
     /**
@@ -115,7 +122,7 @@ public class OpcUaDriver implements ApplicationRunner {
         sendDpValue.execute(new DpValueItem(dpName, dpValue, value.getSourceTime().getJavaDate()));
     }
 
-    public void start(String url, String userName, String password, List<NodeId> subscriptionNodeList) {
+    private OpcUaClient start(String url, String userName, String password, List<NodeId> subscriptionNodeList) {
         // 开启连接
         try {
             OpcUaClient opcUaClient = createClient(url, userName, password);
@@ -141,8 +148,10 @@ public class OpcUaDriver implements ApplicationRunner {
                     log.info("{} 下的节点订阅执行完成", getClass().getSimpleName());
                 }).start();
             }
+            return opcUaClient;
         } catch (Exception e) {
             log.error("{} start failed, url {}", getClass().getSimpleName(), url, e);
+            return null;
         }
     }
 

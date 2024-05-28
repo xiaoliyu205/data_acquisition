@@ -30,7 +30,7 @@ public class OpcUaAddress {
     private String url;
 
     @TableField(value = "namespace")
-    private Integer namespaceIndex;
+    private short namespaceIndex;
 
     @TableField(value = "user_name")
     private String userName;
