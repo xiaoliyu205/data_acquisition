@@ -6,14 +6,14 @@ package org.example.exception;
  * @Author: xiaoliyu
  * @DateTime: 2024/5/23 16:55
  **/
-public class InvalidDptException extends RuntimeException {
+public class InvalidException extends RuntimeException {
 
-    public InvalidDptException(String message) {
+    public InvalidException(String message) {
         super(message);
     }
 
 
-    public InvalidDptException(Throwable cause) {
+    public InvalidException(Throwable cause) {
         super(cause);
     }
 }

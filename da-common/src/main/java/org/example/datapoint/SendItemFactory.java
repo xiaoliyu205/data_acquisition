@@ -2,7 +2,7 @@ package org.example.datapoint;
 
 import jakarta.annotation.PostConstruct;
 import org.example.annotation.SendItemType;
-import org.example.exception.InvalidDptException;
+import org.example.exception.InvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -40,7 +40,7 @@ public class SendItemFactory {
                 .findAny().orElse(null);
 
         if (Objects.isNull(client)) {
-            throw new InvalidDptException("invalid send dpValueItem model: " + model);
+            throw new InvalidException("invalid send dpValueItem model: " + model);
         }
         return client;
     }
