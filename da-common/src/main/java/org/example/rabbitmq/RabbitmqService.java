@@ -51,4 +51,8 @@ public class RabbitmqService implements RabbitTemplate.ConfirmCallback, RabbitTe
     public void sendMessage(String exchange, String routingKey, Object msg) {
         rabbitTemplate.convertAndSend(exchange, routingKey, msg);
     }
+
+    public void sendMessage(String routingKey, Object msg) {
+        rabbitTemplate.convertAndSend(routingKey, msg);
+    }
 }

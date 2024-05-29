@@ -12,7 +12,6 @@ public class InvalidException extends RuntimeException {
         super(message);
     }
 
-
     public InvalidException(Throwable cause) {
         super(cause);
     }

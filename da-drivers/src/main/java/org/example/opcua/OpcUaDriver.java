@@ -114,10 +114,10 @@ public class OpcUaDriver implements ApplicationRunner {
             log.warn("...OpcUa Received null: {}", nodeName);
             return;
         }
-
         String dpValue = value.getValue().getValue().toString();
         String dpName = getDpNameByUrlAndNode(url, nodeName);
 
+        log.info("...OpcUa Received {}: {}", dpName, dpValue);
         assert value.getSourceTime() != null;
         sendDpValue.execute(new DpValueItem(dpName, dpValue, value.getSourceTime().getJavaDate()));
     }
