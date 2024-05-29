@@ -20,7 +20,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.*;
 
@@ -40,40 +39,18 @@ public class OpcUaWrite {
     @Autowired
     private RabbitmqService rabbitmqService;
 
-    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(
-            10,
-            20,
-            60,
-            TimeUnit.SECONDS,
-            new ArrayBlockingQueue<>(10),
-            new ThreadPoolExecutor.CallerRunsPolicy());
-
     @RabbitListener(queues = RabbitConfig.QUEUE_WRITE)
     public void receiveWrite(Message message) {
         log.info("...RabbitMQ Received DataPoint Write: {}", new String(message.getBody()));
-        CompletableFuture<Boolean> isGood = CompletableFuture.supplyAsync(() -> {
-            try {
-                DpValueItem dpValueItem = com.alibaba.fastjson.JSON.parseObject(message.getBody(), DpValueItem.class);
-                return writeNodeValue(dpValueItem.getDpName(), dpValueItem.getValue());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }, executor);
-        isGood.thenAccept((status) -> {
-            System.out.println("111");
-            rabbitmqService.sendMessage(RabbitConfig.QUEUE_WRITE_RETURN, status.toString());
-        });
-        isGood.exceptionally((e) -> {
-            System.out.println("222");
-            rabbitmqService.sendMessage(RabbitConfig.QUEUE_WRITE_RETURN, "e.toString()");
-            return null;
-        });
+        CompletableFuture.supplyAsync(() -> {
+            DpValueItem dpValueItem = JSON.parseObject(message.getBody(), DpValueItem.class);
+            return writeNodeValue(dpValueItem.getDpName(), dpValueItem.getValue());
+        }).whenComplete((aBoolean, throwable) -> rabbitmqService.sendMessage(RabbitConfig.QUEUE_WRITE_RETURN, throwable != null ? throwable.getMessage() : aBoolean.toString()));
     }
-
 
     private Boolean writeNodeValue(String dpName, String value) {
         String info = redisCache.get(RedisKeyPrefix.NODE_CONFIG + dpName);
-        if (info.isEmpty()) {
+        if (Objects.isNull(info)) {
             throw new InvalidDpNameException("Not found redis key: " + dpName);
         }
         OpcUaAddrInfo opcUaInfo = JSON.parseObject(info, OpcUaAddrInfo.class);
