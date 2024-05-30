@@ -15,8 +15,8 @@ public class DpValueWrite extends DpValueItem {
 
     private String mark;
 
-    public DpValueWrite(String dpName, String dpValue, String mark) {
-        super(dpName, dpValue);
+    public DpValueWrite(String dpName, String value, String mark) {
+        super(dpName, value);
         this.mark = mark;
     }
 }
