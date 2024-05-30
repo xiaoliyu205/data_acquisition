@@ -16,9 +16,9 @@ import org.eclipse.milo.opcua.stack.core.security.SecurityPolicy;
 import org.eclipse.milo.opcua.stack.core.types.builtin.*;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.example.constant.RedisKeyPrefix;
-import org.example.datapoint.DpValueItem;
 import org.example.datapoint.SendDpValue;
 import org.example.datapoint.SendItemFactory;
+import org.example.entity.DpValueRead;
 import org.example.entity.OpcUaAddrInfo;
 import org.example.entity.OpcUaAddress;
 import org.example.mapper.OpcUaAddressMapper;
@@ -119,7 +119,7 @@ public class OpcUaDriver implements ApplicationRunner {
 
         log.info("...OpcUa Received {}: {}", dpName, dpValue);
         assert value.getSourceTime() != null;
-        sendDpValue.execute(new DpValueItem(dpName, dpValue, value.getSourceTime().getJavaDate()));
+        sendDpValue.execute(new DpValueRead(dpName, dpValue, value.getSourceTime().getJavaDate()));
     }
 
     private OpcUaClient start(String url, String userName, String password, List<NodeId> subscriptionNodeList) {

@@ -8,7 +8,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.StatusCode;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import org.example.constant.RedisKeyPrefix;
-import org.example.datapoint.DpValueItem;
+import org.example.entity.DpValueWrite;
 import org.example.entity.OpcUaAddrInfo;
 import org.example.exception.InvalidDpNameException;
 import org.example.exception.WriteFailException;
@@ -43,8 +43,8 @@ public class OpcUaWrite {
     public void receiveWrite(Message message) {
         log.info("...RabbitMQ Received DataPoint Write: {}", new String(message.getBody()));
         CompletableFuture.supplyAsync(() -> {
-            DpValueItem dpValueItem = JSON.parseObject(message.getBody(), DpValueItem.class);
-            return writeNodeValue(dpValueItem.getDpName(), dpValueItem.getValue());
+            DpValueWrite dpValueWrite = JSON.parseObject(message.getBody(), DpValueWrite.class);
+            return writeNodeValue(dpValueWrite.getDpName(), dpValueWrite.getValue());
         }).whenComplete((aBoolean, throwable) -> rabbitmqService.sendMessage(RabbitConfig.QUEUE_WRITE_RETURN, throwable != null ? throwable.getMessage() : aBoolean.toString()));
     }
 

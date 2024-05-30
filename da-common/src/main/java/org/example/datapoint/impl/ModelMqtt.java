@@ -2,8 +2,8 @@ package org.example.datapoint.impl;
 
 import org.example.annotation.SendItemType;
 import org.example.constant.DpConstant;
-import org.example.datapoint.DpValueItem;
 import org.example.datapoint.SendDpValue;
+import org.example.entity.DpValueRead;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @SendItemType(DpConstant.SEND_MODEL_MQTT)
 public class ModelMqtt extends SendDpValue {
     @Override
-    public void send(DpValueItem dpValueItem) {
-        System.out.println("mqtt" + dpValueItem);
+    public void send(DpValueRead dpValueRead) {
+        System.out.println("mqtt" + dpValueRead);
     }
 }
