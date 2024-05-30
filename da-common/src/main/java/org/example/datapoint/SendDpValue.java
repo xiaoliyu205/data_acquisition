@@ -9,7 +9,10 @@ import org.example.redis.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: SendDpValue
@@ -24,13 +27,21 @@ public abstract class SendDpValue {
     @Autowired
     private RedisCache redisCache;
 
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(
+            10,
+            50,
+            60,
+            TimeUnit.SECONDS,
+            new ArrayBlockingQueue<>(10),
+            new ThreadPoolExecutor.CallerRunsPolicy());
+
     public void execute(DpValueRead dpValueRead) {
         CompletableFuture.runAsync(() -> {
             redisCache.set(RedisKeyPrefix.DATA_POINT + dpValueRead.getDpName(), JSON.toJSONString(dpValueRead, SerializerFeature.WriteDateUseDateFormat));
             log.info("...OpcUa Received and save {}", dpValueRead);
             send(dpValueRead);
             log.info("...OpcUa Received and send {}", dpValueRead);
-        });
+        }, executor);
     }
 
     protected abstract void send(DpValueRead dpValueRead);

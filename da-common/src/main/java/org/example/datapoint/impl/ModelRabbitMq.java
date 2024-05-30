@@ -1,5 +1,7 @@
 package org.example.datapoint.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.example.annotation.SendItemType;
 import org.example.constant.DpConstant;
 import org.example.datapoint.SendDpValue;
@@ -24,6 +26,6 @@ public class ModelRabbitMq extends SendDpValue {
 
     @Override
     public void send(DpValueRead dpValueRead) {
-        rabbitmqService.sendMessage(RabbitConfig.EXCHANGE_READ, (dpValueRead.getDpName().split(":"))[0], dpValueRead.getValue());
+        rabbitmqService.sendMessage(RabbitConfig.EXCHANGE_READ, (dpValueRead.getDpName().split(":"))[0], JSON.toJSONString(dpValueRead, SerializerFeature.WriteDateUseDateFormat));
     }
 }
