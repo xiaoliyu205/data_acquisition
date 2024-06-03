@@ -1,0 +1,11 @@
+bootJar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(':data-common')
+    implementation project(':data-drivers')
+
+}
+
+description = 'data-service'

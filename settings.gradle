@@ -1,5 +1,5 @@
 rootProject.name = 'data_acquisition'
-include 'da-common'
-include 'da-drivers'
-include 'da-service'
+include 'data-common'
+include 'data-drivers'
+include 'data-service'
 
