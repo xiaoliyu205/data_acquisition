@@ -1,4 +1,4 @@
-USE `data_acquisition_dev`;
+USE `data_acquisition`;
 
 -- -----------------------------------------------------
 -- Table `opcua_address`
