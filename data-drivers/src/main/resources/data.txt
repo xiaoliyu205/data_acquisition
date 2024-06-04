@@ -1,6 +1,6 @@
 ################################
 INSERT INTO `data_acquisition`.`opcua_address`
 (`id`, `dpt`, `datapoint`, `plc_name`, `opcua_address`, `url`, `namespace`, `user_name`, `password`) VALUES
-(1, 'CarNum', 'OP010', 'OP', 'OpcUaTest.test01.str', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
-(2, 'CarInt', 'OP020', 'OP', 'OpcUaTest.test02.str', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
-(3, 'CarInt', 'OP030', 'OP', 'OpcUaTest.test03.str', 'opc.tcp://127.0.0.1:4820', 2, 'para', '');
+(1, 'CarNum', 'OP010', 'OP', 'OpcUaTest.test01.Str', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(2, 'CarInt', 'OP020', 'OP', 'OpcUaTest.test02.Str', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(3, 'CarInt', 'OP030', 'OP', 'OpcUaTest.test03.Str', 'opc.tcp://127.0.0.1:4820', 2, 'para', '');
