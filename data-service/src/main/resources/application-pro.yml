@@ -1,15 +1,15 @@
 server:
-  port: 8081
+  port: 8080
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/data_acquisition?useUnicode=false
+    url: jdbc:mysql://mysql:3306/data_acquisition?useUnicode=false
     username: root
     password: 1234
 
   data:
     redis:
-      host: localhost
+      host: redis
       password: 1234
       port: 6379
       lettuce:
@@ -20,14 +20,10 @@ spring:
           max-wait: 100ms     #连接等待时间
 
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: admin
     password: 1234
     virtual-host: my_vhost
     publisher-confirm-type: correlated
     publisher-returns: true
-
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
