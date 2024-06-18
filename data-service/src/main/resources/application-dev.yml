@@ -28,6 +28,15 @@ spring:
     publisher-confirm-type: correlated
     publisher-returns: true
 
+# Mqtt配置
+mqtt:
+  serverURIs: tcp://localhost:1883
+  username: admin
+  password: 1234
+  client:
+    id: ${random.value}
+  topic: topic_default
+
 #mybatis-plus:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

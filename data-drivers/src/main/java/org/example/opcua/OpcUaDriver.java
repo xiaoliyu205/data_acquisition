@@ -43,7 +43,7 @@ import java.util.concurrent.CountDownLatch;
  * @DateTime: 2024/5/22 23:20
  **/
 @Slf4j
-@Component
+//@Component
 public class OpcUaDriver implements ApplicationRunner {
 
     @Autowired
