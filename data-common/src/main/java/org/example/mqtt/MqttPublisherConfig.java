@@ -1,8 +1,5 @@
 package org.example.mqtt;
 
-import jakarta.annotation.PostConstruct;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,10 +19,8 @@ import org.springframework.messaging.MessageHandler;
  * @Author: xiaoliyu
  * @DateTime: 2024/6/18 16:31
  **/
-@Slf4j
 @Configuration
 @IntegrationComponentScan
-@Data
 public class MqttPublisherConfig {
 
     public static final String CHANNEL_NAME_OUT = "mqttOutboundChannel";
@@ -52,12 +47,6 @@ public class MqttPublisherConfig {
     @Value("${mqtt.topic}")
     private String defaultTopic;
 
-    @PostConstruct
-    public void init() {
-        log.debug("username:{} password:{} hostUrl:{} clientId :{} ",
-                this.username, this.password, this.hostUrl, this.clientId, this.defaultTopic);
-    }
-
     /**
      * MQTT连接器选项
      *
@@ -67,7 +56,7 @@ public class MqttPublisherConfig {
     public MqttConnectOptions getSenderMqttConnectOptions() {
         MqttConnectOptions options = new MqttConnectOptions();
         // 设置连接的用户名
-        if (!username.trim().equals("")) {
+        if (!username.trim().isEmpty()) {
             options.setUserName(username);
         }
         // 设置连接的密码

@@ -2,7 +2,7 @@ package org.example.controller;
 
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.example.mqtt.MqttGateway;
+import org.example.mqtt.SendToMqtt;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class MqttTestController {
      * 注入发送MQTT的Bean
      */
     @Resource
-    private MqttGateway mqttGateway;
+    private SendToMqtt sendToMqtt;
 
     /**
      * 发送自定义消息内容（使用默认主题）
@@ -36,7 +36,7 @@ public class MqttTestController {
     @PostMapping(value = "/sendMqtt", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> sendMqtt(@RequestParam(value = "msg") String msg) {
         log.info("================生产默认主题的MQTT消息===={}============", msg);
-        mqttGateway.sendToMqtt(msg);
+        sendToMqtt.sendToMqtt(msg);
         return new ResponseEntity<>("发送成功", HttpStatus.OK);
     }
 
@@ -50,7 +50,7 @@ public class MqttTestController {
     @PostMapping(value = "/sendMqtt2", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> sendMqtt2(@RequestParam("topic") String topic, @RequestParam(value = "msg") String msg) {
         log.info("================生产自定义主题的MQTT消息===={}============", msg);
-        mqttGateway.sendToMqtt(topic, msg);
+        sendToMqtt.sendToMqtt(topic, msg);
         return new ResponseEntity<>("发送成功", HttpStatus.OK);
     }
 }
