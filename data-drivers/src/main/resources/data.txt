@@ -4,3 +4,28 @@ INSERT INTO `data_acquisition`.`opcua_address`
 (1, 'CarNum', 'OP010', 'OP', 'OpcUaTest.test01.Str', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
 (2, 'CarInt', 'OP020', 'OP', 'OpcUaTest.test02.Str', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
 (3, 'CarInt', 'OP030', 'OP', 'OpcUaTest.test03.Str', 'opc.tcp://127.0.0.1:4820', 2, 'para', '');
+
+
+################################
+INSERT INTO `data_acquisition`.`opcua_address`
+(`id`, `dpt`, `datapoint`, `plc_name`, `opcua_address`, `url`, `namespace`, `user_name`, `password`) VALUES
+(1, 'Layout:EStop', 'MC010_R01', 'OP', 'OpcUaTest.EStop_MC010_R01.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(2, 'Layout:EStop', 'MC010_R02', 'OP', 'OpcUaTest.EStop_MC010_R02.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(3, 'Layout:EStop', 'MC010_R03', 'OP', 'OpcUaTest.EStop_MC010_R03.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(4, 'Layout:EStop', 'MC010_R04', 'OP', 'OpcUaTest.EStop_MC010_R04.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(5, 'Layout:EStop', 'MC010_R05', 'OP', 'OpcUaTest.EStop_MC010_R05.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(6, 'Layout:EStop', 'MC010_R06', 'OP', 'OpcUaTest.EStop_MC010_R06.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(7, 'Layout:EStop', 'MC010_SG01', 'OP', 'OpcUaTest.EStop_MC010_SG01.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(8, 'Layout:EStop', 'MC010_SG02', 'OP', 'OpcUaTest.EStop_MC010_SG02.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(9, 'Layout:Robot', 'MC010_R01', 'OP', 'OpcUaTest.Robot_MC010_R01.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(10, 'Layout:Robot', 'MC010_R02', 'OP', 'OpcUaTest.Robot_MC010_R02.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(11, 'Layout:Robot', 'MC010_R03', 'OP', 'OpcUaTest.Robot_MC010_R03.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(12, 'Layout:Robot', 'MC010_R04', 'OP', 'OpcUaTest.Robot_MC010_R04.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(13, 'Layout:Robot', 'MC010_R05', 'OP', 'OpcUaTest.Robot_MC010_R05.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(14, 'Layout:Robot', 'MC010_R06', 'OP', 'OpcUaTest.Robot_MC010_R06.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(15, 'Layout:SafetyDoor', 'MC010_SG01', 'OP', 'OpcUaTest.SafetyDoor_MC010_SG01.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(16, 'Layout:SafetyDoor', 'MC010_SG02', 'OP', 'OpcUaTest.SafetyDoor_MC010_SG02.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(17, 'Layout:Raster', 'MC010_LC01', 'OP', 'OpcUaTest.Raster_MC010_LC01.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', ''),
+(18, 'Layout:Raster', 'MC010_LC02', 'OP', 'OpcUaTest.Raster_MC010_LC02.Status', 'opc.tcp://127.0.0.1:4820', 2, 'para', '');
+
+

@@ -5,9 +5,11 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.example.annotation.SendItemType;
 import org.example.constant.DpConstant;
 import org.example.datapoint.SendDpValue;
+import org.example.entity.DpValueItem;
 import org.example.entity.DpValueRead;
 import org.example.rabbitmq.RabbitConfig;
 import org.example.rabbitmq.RabbitmqService;
+import org.example.websocket.WebSocketServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +26,14 @@ public class ModelRabbitMq extends SendDpValue {
     @Autowired
     private RabbitmqService rabbitmqService;
 
+    @Autowired
+    private WebSocketServer webSocketServer;
+
     @Override
     public void send(DpValueRead dpValueRead) {
         rabbitmqService.sendMessage(RabbitConfig.EXCHANGE_READ, (dpValueRead.getDpName().split(":"))[0], JSON.toJSONString(dpValueRead, SerializerFeature.WriteDateUseDateFormat));
+
+        DpValueItem dpValueItem = new DpValueItem(dpValueRead.getDpName(), dpValueRead.getValue());
+        webSocketServer.sendMessage("layout",  JSON.toJSONString(dpValueItem));
     }
 }
