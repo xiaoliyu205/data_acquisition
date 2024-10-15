@@ -20,12 +20,12 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 @SendItemType(DpConstant.SEND_MODEL_RABBITMQ)
-public class ModelRabbitMq extends SendDpValue {
+public class RabbitMqModel extends SendDpValue {
 
     private final RabbitmqService rabbitmqService;
 
     @Autowired
-    public ModelRabbitMq(RedisCache redisCache, RabbitmqService rabbitmqService) {
+    public RabbitMqModel(RedisCache redisCache, RabbitmqService rabbitmqService) {
         super(redisCache);
         this.rabbitmqService = rabbitmqService;
     }

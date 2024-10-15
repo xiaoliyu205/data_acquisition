@@ -46,5 +46,9 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.5'
         //rabbitmq
         implementation 'org.springframework.boot:spring-boot-starter-amqp:3.1.0'
+        //mqtt
+        implementation 'org.springframework.integration:spring-integration-mqtt:6.3.0'
+        // https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-stream
+        implementation 'org.springframework.integration:spring-integration-stream:6.3.0'
     }
 }

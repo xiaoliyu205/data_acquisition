@@ -15,4 +15,6 @@ public class DpConstant {
 
     public static final String SEND_MODEL_MQTT = "mqtt";
 
+    public static final String SEND_MODEL_ALL = "all";
+
 }
