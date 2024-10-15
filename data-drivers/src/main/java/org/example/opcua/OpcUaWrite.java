@@ -34,11 +34,14 @@ import java.util.concurrent.*;
 @Component
 public class OpcUaWrite {
 
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
+    private final RabbitmqService rabbitmqService;
 
     @Autowired
-    private RabbitmqService rabbitmqService;
+    public OpcUaWrite(RedisCache redisCache, RabbitmqService rabbitmqService) {
+        this.redisCache = redisCache;
+        this.rabbitmqService = rabbitmqService;
+    }
 
     @RabbitListener(queues = RabbitConfig.QUEUE_WRITE)
     public void receiveWrite(Message message) {

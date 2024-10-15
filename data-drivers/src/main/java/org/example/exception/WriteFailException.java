@@ -7,6 +7,7 @@ package org.example.exception;
  * @DateTime: 2024/5/29 16:56
  **/
 public class WriteFailException extends RuntimeException {
+
     public WriteFailException(String message) {
         super(message);
     }

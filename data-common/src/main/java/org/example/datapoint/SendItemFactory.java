@@ -20,8 +20,12 @@ import java.util.stream.Collectors;
 @Component
 public class SendItemFactory {
 
+    private final ApplicationContext applicationContext;
+
     @Autowired
-    private ApplicationContext applicationContext;
+    public SendItemFactory(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     private static Map<String, SendDpValue> map;
 

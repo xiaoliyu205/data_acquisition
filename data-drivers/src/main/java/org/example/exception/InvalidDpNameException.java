@@ -7,6 +7,7 @@ package org.example.exception;
  * @DateTime: 2024/5/29 16:40
  **/
 public class InvalidDpNameException extends RuntimeException {
+
     public InvalidDpNameException(String message) {
         super(message);
     }

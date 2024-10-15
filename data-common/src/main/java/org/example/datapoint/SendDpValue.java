@@ -24,8 +24,12 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public abstract class SendDpValue {
 
+    private final RedisCache redisCache;
+
     @Autowired
-    private RedisCache redisCache;
+    public SendDpValue(RedisCache redisCache) {
+        this.redisCache = redisCache;
+    }
 
     private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(
             10,

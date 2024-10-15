@@ -4,6 +4,7 @@ import org.example.annotation.SendItemType;
 import org.example.constant.DpConstant;
 import org.example.datapoint.SendDpValue;
 import org.example.entity.DpValueRead;
+import org.example.redis.RedisCache;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +16,10 @@ import org.springframework.stereotype.Component;
 @Component
 @SendItemType(DpConstant.SEND_MODEL_MQTT)
 public class ModelMqtt extends SendDpValue {
+    public ModelMqtt(RedisCache redisCache) {
+        super(redisCache);
+    }
+
     @Override
     public void send(DpValueRead dpValueRead) {
         System.out.println("mqtt" + dpValueRead);

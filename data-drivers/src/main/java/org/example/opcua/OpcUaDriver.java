@@ -46,23 +46,23 @@ import java.util.concurrent.CountDownLatch;
 @Component
 public class OpcUaDriver implements ApplicationRunner {
 
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
+    private final OpcUaAddressMapper opcUaAddressMapper;
+    private final Double defaultSamplingInterval;
 
     @Autowired
-    private OpcUaAddressMapper opcUaAddressMapper;
+    public OpcUaDriver(RedisCache redisCache, OpcUaAddressMapper opcUaAddressMapper) {
+        this.redisCache = redisCache;
+        this.opcUaAddressMapper = opcUaAddressMapper;
+        this.defaultSamplingInterval = 500D;
+    }
 
     private final Map<String, List<NodeId>> urlNodeMap = new HashMap<>();
-
     private final Map<String, OpcUaAddress> urlMap = new HashMap<>();
-
-    private final Double defaultSamplingInterval = 500D;
 
     @Value("${sendItem.model}")
     private String sendModel;
-
     private SendDpValue sendDpValue;
-
     private static final Map<String, OpcUaClient> urlClient = new HashMap<>();
 
     @Override

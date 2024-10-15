@@ -18,8 +18,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RabbitmqService implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnsCallback {
 
+    private final RabbitTemplate rabbitTemplate;
+
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    public RabbitmqService(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
