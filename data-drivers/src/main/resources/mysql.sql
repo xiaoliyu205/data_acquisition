@@ -3,8 +3,8 @@ USE `data_acquisition`;
 -- -----------------------------------------------------
 -- Table `opcua_address`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `opcua_address` ;
-CREATE TABLE IF NOT EXISTS `opcua_address` (
+DROP TABLE IF EXISTS `data_acquisition`.`opcua_address` ;
+CREATE TABLE IF NOT EXISTS `data_acquisition`.`opcua_address` (
     `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
     `dpt`            VARCHAR(20) NULL DEFAULT NULL COMMENT 'DataPointType',
     `datapoint`      VARCHAR(20) NULL DEFAULT NULL COMMENT 'DataPoint',
