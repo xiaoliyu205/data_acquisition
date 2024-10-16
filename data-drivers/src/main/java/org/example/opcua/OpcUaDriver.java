@@ -54,7 +54,7 @@ public class OpcUaDriver implements ApplicationRunner {
     public OpcUaDriver(RedisCache redisCache, OpcUaAddressMapper opcUaAddressMapper) {
         this.redisCache = redisCache;
         this.opcUaAddressMapper = opcUaAddressMapper;
-        this.defaultSamplingInterval = 200.0;
+        this.defaultSamplingInterval = 1000.0;
     }
 
     private final Map<String, List<NodeId>> urlNodeMap = new HashMap<>();
