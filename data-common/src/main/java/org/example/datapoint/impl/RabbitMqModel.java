@@ -5,7 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.example.annotation.SendItemType;
 import org.example.constant.DpConstant;
 import org.example.datapoint.SendDpValue;
-import org.example.entity.DpValueRead;
+import org.example.entity.DpValueItem;
 import org.example.rabbitmq.RabbitConfig;
 import org.example.rabbitmq.RabbitmqService;
 import org.example.redis.RedisCache;
@@ -29,7 +29,7 @@ public class RabbitMqModel extends SendDpValue {
     }
 
     @Override
-    public void send(DpValueRead dpValueRead) {
-        rabbitmqService.sendMessage(RabbitConfig.EXCHANGE_READ, (dpValueRead.getDpName().split(":"))[0], JSON.toJSONString(dpValueRead, SerializerFeature.WriteDateUseDateFormat));
+    public void send(DpValueItem dpValueItem) {
+        rabbitmqService.sendMessage(RabbitConfig.EXCHANGE_READ, (dpValueItem.getDpName().split(":"))[0], JSON.toJSONString(dpValueItem, SerializerFeature.WriteDateUseDateFormat));
     }
 }

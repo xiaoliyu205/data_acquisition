@@ -1,19 +1,26 @@
 package org.example.entity;
 
-import lombok.AllArgsConstructor;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+
+import java.util.Date;
 
 /**
- * @ClassName: DpValueItem
+ * @ClassName: DpValueRead
  * @Description: TODO
  * @Author: xiaoliyu
- * @DateTime: 2024/5/30 14:09
+ * @DateTime: 2024/5/30 14:10
  **/
+@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class DpValueItem {
-    private String dpName;
-    private Object value;
+public class DpValueItem extends DpValue {
+
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
+    private Date time;
+
+    public DpValueItem(String dpName, Object value, Date time) {
+        super(dpName, value);
+        this.time = time;
+    }
 }

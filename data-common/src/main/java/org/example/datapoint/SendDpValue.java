@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.example.constant.RedisKeyPrefix;
-import org.example.entity.DpValueRead;
+import org.example.entity.DpValueItem;
 import org.example.redis.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,14 +39,14 @@ public abstract class SendDpValue {
             new ArrayBlockingQueue<>(10),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
-    public void execute(DpValueRead dpValueRead) {
+    public void execute(DpValueItem dpValueItem) {
         CompletableFuture.runAsync(() -> {
-            redisCache.set(RedisKeyPrefix.DATA_POINT + dpValueRead.getDpName(), JSON.toJSONString(dpValueRead, SerializerFeature.WriteDateUseDateFormat));
-            log.info("...OpcUa Received and save {}", dpValueRead);
-            send(dpValueRead);
-            log.info("...OpcUa Received and send {}", dpValueRead);
+            redisCache.set(RedisKeyPrefix.DATA_POINT + dpValueItem.getDpName(), JSON.toJSONString(dpValueItem, SerializerFeature.WriteDateUseDateFormat));
+            log.info("...OpcUa Received and save {}", dpValueItem);
+            send(dpValueItem);
+            log.info("...OpcUa Received and send {}", dpValueItem);
         }, executor);
     }
 
-    protected abstract void send(DpValueRead dpValueRead);
+    protected abstract void send(DpValueItem dpValueItem);
 }

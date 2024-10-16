@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  **/
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class DpValueWrite extends DpValueItem {
+public class DpValueWrite extends DpValue {
 
     private String mark;
 

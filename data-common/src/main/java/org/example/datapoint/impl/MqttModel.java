@@ -5,7 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.example.annotation.SendItemType;
 import org.example.constant.DpConstant;
 import org.example.datapoint.SendDpValue;
-import org.example.entity.DpValueRead;
+import org.example.entity.DpValueItem;
 import org.example.mqtt.SendToMqtt;
 import org.example.redis.RedisCache;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class MqttModel extends SendDpValue {
     }
 
     @Override
-    public void send(DpValueRead dpValueRead) {
-        sendToMqtt.sendToMqtt("DataPoint-Read/" + (dpValueRead.getDpName().split(":"))[0], 2, JSON.toJSONString(dpValueRead, SerializerFeature.WriteDateUseDateFormat));
+    public void send(DpValueItem dpValueItem) {
+        sendToMqtt.sendToMqtt("DataPoint-Read/" + (dpValueItem.getDpName().split(":"))[0], 2, JSON.toJSONString(dpValueItem, SerializerFeature.WriteDateUseDateFormat));
     }
 }
