@@ -19,7 +19,7 @@ public class DpValueRead extends DpValueItem {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date time;
 
-    public DpValueRead(String dpName, String value, Date time) {
+    public DpValueRead(String dpName, Object value, Date time) {
         super(dpName, value);
         this.time = time;
     }

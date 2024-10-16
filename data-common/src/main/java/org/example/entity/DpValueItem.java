@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DpValueItem {
     private String dpName;
-    private String value;
+    private Object value;
 }

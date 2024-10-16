@@ -9,7 +9,6 @@ import org.example.entity.DpValueRead;
 import org.example.rabbitmq.RabbitConfig;
 import org.example.rabbitmq.RabbitmqService;
 import org.example.redis.RedisCache;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,7 +23,6 @@ public class RabbitMqModel extends SendDpValue {
 
     private final RabbitmqService rabbitmqService;
 
-    @Autowired
     public RabbitMqModel(RedisCache redisCache, RabbitmqService rabbitmqService) {
         super(redisCache);
         this.rabbitmqService = rabbitmqService;

@@ -61,7 +61,7 @@ public class OpcUaWrite {
         });
     }
 
-    private Boolean writeNodeValue(String dpName, String value) {
+    private Boolean writeNodeValue(String dpName, Object value) {
         String info = redisCache.get(RedisKeyPrefix.NODE_CONFIG + dpName);
         if (Objects.isNull(info)) {
             throw new InvalidDpNameException("Not found redis key: " + dpName);

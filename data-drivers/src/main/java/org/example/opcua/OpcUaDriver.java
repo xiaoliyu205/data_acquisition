@@ -54,7 +54,7 @@ public class OpcUaDriver implements ApplicationRunner {
     public OpcUaDriver(RedisCache redisCache, OpcUaAddressMapper opcUaAddressMapper) {
         this.redisCache = redisCache;
         this.opcUaAddressMapper = opcUaAddressMapper;
-        this.defaultSamplingInterval = 500D;
+        this.defaultSamplingInterval = 200.0;
     }
 
     private final Map<String, List<NodeId>> urlNodeMap = new HashMap<>();
@@ -63,6 +63,7 @@ public class OpcUaDriver implements ApplicationRunner {
     @Value("${sendItem.model}")
     private String sendModel;
     private SendDpValue sendDpValue;
+
     private static final Map<String, OpcUaClient> urlClient = new HashMap<>();
 
     @Override
@@ -114,7 +115,7 @@ public class OpcUaDriver implements ApplicationRunner {
             log.warn("...OpcUa Received null: {}", nodeName);
             return;
         }
-        String dpValue = value.getValue().getValue().toString();
+        Object dpValue = value.getValue().getValue();//.toString();
         String dpName = getDpNameByUrlAndNode(url, nodeName);
 
         log.info("...OpcUa Received {}: {}", dpName, dpValue);
