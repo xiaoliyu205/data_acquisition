@@ -8,21 +8,14 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.StatusCode;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import org.example.constant.RedisKeyPrefix;
-import org.example.entity.DpValueWrite;
-import org.example.entity.DpValueWriteReturn;
 import org.example.entity.OpcUaAddrInfo;
 import org.example.exception.InvalidDpNameException;
 import org.example.exception.WriteFailException;
-import org.example.rabbitmq.RabbitConfig;
-import org.example.rabbitmq.RabbitmqService;
 import org.example.redis.RedisCache;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
-import java.util.concurrent.*;
 
 /**
  * @ClassName: OpcUaWrite
@@ -35,33 +28,13 @@ import java.util.concurrent.*;
 public class OpcUaWrite {
 
     private final RedisCache redisCache;
-    private final RabbitmqService rabbitmqService;
 
     @Autowired
-    public OpcUaWrite(RedisCache redisCache, RabbitmqService rabbitmqService) {
+    public OpcUaWrite(RedisCache redisCache) {
         this.redisCache = redisCache;
-        this.rabbitmqService = rabbitmqService;
     }
 
-    @RabbitListener(queues = RabbitConfig.QUEUE_WRITE)
-    public void receiveWrite(Message message) {
-        log.info("...RabbitMQ Received DataPoint Write: {}", new String(message.getBody()));
-        DpValueWriteReturn dpValueWriteReturn = new DpValueWriteReturn();
-        CompletableFuture.supplyAsync(() -> {
-            DpValueWrite dpValueWrite = JSON.parseObject(message.getBody(), DpValueWrite.class);
-            dpValueWriteReturn.setMark(dpValueWrite.getMark());
-            return writeNodeValue(dpValueWrite.getDpName(), dpValueWrite.getValue());
-        }).whenComplete((aBoolean, throwable) -> {
-            if (aBoolean == null) {
-                dpValueWriteReturn.setErr(throwable.getMessage());
-            } else {
-                dpValueWriteReturn.setIsGood(aBoolean);
-            }
-            rabbitmqService.sendMessage(RabbitConfig.QUEUE_WRITE_RETURN, JSON.toJSONString(dpValueWriteReturn));
-        });
-    }
-
-    private Boolean writeNodeValue(String dpName, Object value) {
+    public Boolean writeNodeValue(String dpName, Object value) {
         String info = redisCache.get(RedisKeyPrefix.NODE_CONFIG + dpName);
         if (Objects.isNull(info)) {
             throw new InvalidDpNameException("Not found redis key: " + dpName);

@@ -46,5 +46,9 @@ public class RedisCache {
     public void delete(Set<String> key) {
         stringRedisTemplate.delete(key);
     }
+
+    public Boolean exists(String key) {
+        return stringRedisTemplate.hasKey(key);
+    }
 }
 

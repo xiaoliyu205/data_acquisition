@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DpValueWriteReturn {
+public class DpValueWriteResult {
     private String mark;
     private Boolean isGood;
     private String err;
