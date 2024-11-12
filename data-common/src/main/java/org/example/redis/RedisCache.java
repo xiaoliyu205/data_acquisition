@@ -50,5 +50,9 @@ public class RedisCache {
     public Boolean exists(String key) {
         return stringRedisTemplate.hasKey(key);
     }
+
+    public Boolean setIfAbsent(String key, String value, long timeout, TimeUnit unit) {
+        return stringRedisTemplate.opsForValue().setIfAbsent(key, value, timeout, unit);
+    }
 }
 

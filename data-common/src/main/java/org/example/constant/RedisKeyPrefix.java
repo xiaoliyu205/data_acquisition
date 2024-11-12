@@ -20,4 +20,6 @@ public class RedisKeyPrefix {
     public static final String DATA_POINT = "DataPoint:";
 
     public static final String DELETE_STR = "Data";
+
+    public static final String LOCK = DATA_CONFIG + "Lock:";
 }

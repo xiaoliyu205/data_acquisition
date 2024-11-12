@@ -8,4 +8,4 @@ server:
   port: 8082
 
 sendItem:
-  model: all    #rabbttmq: redis + rabbitmq    mqtt: redis + mqtt
+  model: mqtt    #rabbttmq: redis + rabbitmq    mqtt: redis + mqtt

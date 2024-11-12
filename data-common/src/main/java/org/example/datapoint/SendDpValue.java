@@ -41,10 +41,20 @@ public abstract class SendDpValue {
 
     public void execute(DpValueItem dpValueItem) {
         CompletableFuture.runAsync(() -> {
-            redisCache.set(RedisKeyPrefix.DATA_POINT + dpValueItem.getDpName(), JSON.toJSONString(dpValueItem, SerializerFeature.WriteDateUseDateFormat));
-            log.info("...OpcUa Received and save {}", dpValueItem);
-            send(dpValueItem);
-            log.info("...OpcUa Received and send {}", dpValueItem);
+            Boolean success = redisCache.setIfAbsent(
+                    String.format(RedisKeyPrefix.LOCK + dpValueItem.getDpName() + '-' + dpValueItem.getTime().getTime()),
+                    Thread.currentThread().getName(),
+                    5,
+                    TimeUnit.SECONDS
+            );
+            if (Boolean.TRUE.equals(success)) {
+                redisCache.set(RedisKeyPrefix.DATA_POINT + dpValueItem.getDpName(), JSON.toJSONString(dpValueItem, SerializerFeature.WriteDateUseDateFormat));
+                log.info("...OpcUa Received and save {}", dpValueItem);
+                send(dpValueItem);
+                log.info("...OpcUa Received and send {}", dpValueItem);
+            } else {
+                log.info("...OpcUa Duplicate Messages {}", dpValueItem);
+            }
         }, executor);
     }
 
